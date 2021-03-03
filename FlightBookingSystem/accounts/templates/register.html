@@ -1,0 +1,34 @@
+<html>
+<head> 
+	<title> Registration </title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'accounts/register_style.css' %}"/>
+</head>
+<body>
+	<div class="main">
+		<form action="register" method="POST">
+			{% csrf_token %}
+			<h1 align="center"> Registration </h1>
+			<br> </br>
+			<label> Username: </label>
+			<input type="text" required autocomplete="off" placeholder="Enter the username" name="username">
+			<br> </br>
+			<label> Password: </label>
+			<input type="password" required autocomplete="off" placeholder="Enter the password" name="password1">
+			<br> </br>
+			<label> Confirm Password: </label>
+			<input type="password" required autocomplete="off" placeholder="Confirm the password" name="password2">
+			<br> </br>
+			<label> E-mail: </label>
+			<input type="email" required autocomplete="off" placeholder="Enter the email" name="email">
+			<br> </br>
+			<button type="submit"> Register </button>
+		</form>
+		<div>
+			{% for message in messages %}
+			<h3> {{message}} </h3>
+			{% endfor %}
+		</div>
+	</div>
+</body>
+</html>

@@ -1,37 +1,106 @@
 <html>
-<head> 
-	<title> Home Page </title>
+<head>
 </head>
 <body>
-	<form action="home" method="POST">
-		<table border="1">
-		<tr>
-			<td> From </td>
-			<td> <input type="text" placeholder="From"> </td>
-		</tr>
-		<tr>
-			<td> To </td>
-			<td> <input type="text" placeholder="To"> </td>
-		</tr>
-		<tr>
-			<td> Departure date </td>
-			<td> <input type="date"> </td>
-		</tr>
-		<tr>
-			<td> Return date </td>
-			<td> <input type="date"> </td>
-		</tr>
-		<tr>
-			<td> Travellers </td>
-			<td> <input type="text"> </td>
-		</tr>
-		<tr>
-			<td> Class </td>
-			<td> <select name="class"> 
-				<option value="Economy">Economy</option>
-			</td>
-		</tr>
-		</table>
-	</form>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'searchFlight/home_style.css' %}"/>
+	<div class="hero">
+		<div class="form-box">
+			<div class="button-box">
+			<div id="btn"> </div>
+				<button type="button" class="toggle-btn" onclick="oneway()"> One way </button>
+				<button type="button" class="toggle-btn" onclick="roundtrip()"> Round trip </button>
+			</div>
+			<form id="oneway" class="input-group">
+				<table border="0" colspan="2">
+					<tr>
+						<td colspan="2">
+							<input type="text" class="input-field" placeholder="From" required name="from"> 
+							<input type="text" class="input-field" placeholder="To" required name="to">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<span class="form-label"> Departure Date</span>
+										<input class="form-control" type="date" required name="depdate">
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td> <input type="number" class="input-field" placeholder="Travellers" min="1" required name="travellers">  </td>
+						<td>
+							<select name="class" required>
+								<option value="economy"> Economy </option>
+								<option value="business"> Business </option>
+								<option value="firstclass"> First Class </option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<br> </br>
+				<button type="submit" class="submit-btn"> Search Flights </button>
+			</form>
+			<form id="roundtrip" class="input-group">
+				<table border="0" colspan="2">
+					<tr>
+						<td colspan="2">
+							<input type="text" class="input-field" placeholder="From"required name="from"> 
+							<input type="text" class="input-field" placeholder="To" required name="to">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<span class="form-label"> Departure Date</span>
+										<input class="form-control" type="date" required name="depdate">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<span class="form-label"> &nbsp&nbsp Return Date &nbsp</span>
+										<input class="form-control" type="date" requiredname="retdate">
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td> <input type="number" class="input-field" placeholder="Travellers" min="1" required name="travellers">  </td>
+						<td>
+							<select name="class" required>
+								<option value="economy"> Economy </option>
+								<option value="business"> Business </option>
+								<option value="firstclass"> First Class </option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<br> </br>
+				<button type="submit" class="submit-btn"> Search Flights </button>
+			</form>
+		</div>
+	</div>
+	<script>
+	var x=document.getElementById("oneway");
+	var y=document.getElementById("roundtrip");
+	var z=document.getElementById("btn");
+	function roundtrip(){
+		x.style.left="-400px";
+		y.style.left="50px";
+		z.style.left="110px";
+	}
+	function oneway(){
+		x.style.left="50px";
+		y.style.left="450px";
+		z.style.left="0";
+	}
+	</script>
 </body>
 </html>

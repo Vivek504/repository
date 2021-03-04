@@ -11,7 +11,8 @@
 				<button type="button" class="toggle-btn" onclick="oneway()"> One way </button>
 				<button type="button" class="toggle-btn" onclick="roundtrip()"> Round trip </button>
 			</div>
-			<form id="oneway" class="input-group">
+			<form id="oneway" class="input-group" action="home" method="POST">
+				{% csrf_token %}
 				<table border="0" colspan="2">
 					<tr>
 						<td colspan="2">
@@ -45,7 +46,8 @@
 				<br> </br>
 				<button type="submit" class="submit-btn"> Search Flights </button>
 			</form>
-			<form id="roundtrip" class="input-group">
+			<form id="roundtrip" class="input-group" action="home" method="POST">
+				{% csrf_token %}
 				<table border="0" colspan="2">
 					<tr>
 						<td colspan="2">

@@ -1,0 +1,17 @@
+<html>
+<body>
+	{% csrf_token %}
+
+	{% for flight in data %}
+		{{ flight.source }}
+		{{ flight.destination }}
+		{{ flight.departure_time }}
+		{{ flight.arrival_time }}
+		{{ travellers }}
+		{% if cls == "economy" %}
+			{{ flight.economy_price }}
+		{% endif %}
+	{% endfor %}
+	
+</body>
+</html>

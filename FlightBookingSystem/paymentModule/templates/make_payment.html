@@ -1,0 +1,11 @@
+<html>
+<body>
+	<form action="make_payment" method="POST">
+	{% csrf_token %}
+		<input required placeholder="Card Number" name="cardno" pattern=".{16,19}" title="16 to 19 characters"> <br>
+		Valid Until: <input required type="date"> <br>
+		<input type="text" required placeholder="CVC" name="cvc"> <br>
+		<input type="submit"> Make Payment
+	</form>
+</body>
+</html>

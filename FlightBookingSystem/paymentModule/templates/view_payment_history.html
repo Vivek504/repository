@@ -1,0 +1,15 @@
+<html>
+<body>
+	{% for i in data %}
+	<table>
+		<tr>
+			<td> {{ i.first_name }} </td>
+			<td> {{ i.last_name }} </td>
+			<td> {{ i.mobile_no }} </td>
+			<td> {{ i.payment_method }} </td>
+			<td> {{ i.payment_date }} </td>
+		</tr>
+	</table>
+	{% endfor %}
+</body>
+</html>

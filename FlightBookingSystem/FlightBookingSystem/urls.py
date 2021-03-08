@@ -20,5 +20,6 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('accounts.urls')),
-    path('',include('searchFlight.urls'))
+    path('',include('searchFlight.urls')),
+    path('',include('paymentModule.urls'))
 ]

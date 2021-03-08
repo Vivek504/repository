@@ -1,0 +1,70 @@
+<html>
+<head>
+	<title> Flight Details </title>
+	<style>
+	table{
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	table td{
+		column-width: 150px;
+		text-align: center;
+	}
+	</style>
+</head>
+<body>
+	<form action="payment" method="POST">
+	{% csrf_token %}
+		<h3> {{ source }} -> {{ destination }} </h3>
+		{% for flight in data %}
+			<table width="100%">
+				{% if flight.date > current_date %}
+					<tr>
+						<td> {{ flight.company }} </td>
+						<td> {{ flight.date }} </td>
+						<td> {{ flight.arrival_date }} </td>
+						<td> {{ travellers }} </td>
+						<td> </td>
+					</tr>
+					<tr>
+						<td> {{ flight.flight_no }} </td>
+						<td> {{ flight.departure_time }} </td>
+						<td> {{ flight.arrival_time }} </td>
+						<td> {% if cls == "economy" %}
+								{% widthratio flight.economy_price 1 travellers %}
+							{% elif cls == "business" %}
+								{% widthratio flight.business_price 1 travellers %}
+							{% else %}
+								{% widthratio flight.first_class_price 1 travellers %}
+							{% endif %} </td>
+						<td> <a href="/flight{{ flight.id }}{{ travellers }}{{ cls }}"> Select </a> </td>
+					</tr>
+				{% elif flight.date == current_date and flight.departure_time > current_time %}
+					<tr>
+						<td> {{ flight.company }} </td>
+						<td> {{ flight.date }} </td>
+						<td> {{ flight.arrival_date }} </td>
+						<td> {{ travellers }} </td>
+						<td> </td>
+					</tr>
+					<tr>
+						<td> {{ flight.flight_no }} </td>
+						<td> {{ flight.departure_time }} </td>
+						<td> {{ flight.arrival_time }} </td>
+						<td> {% if cls == "economy" %}
+								{% widthratio flight.economy_price 1 travellers %}
+							{% elif cls == "business" %}
+								{% widthratio flight.business_price 1 travellers %}
+							{% else %}
+								{% widthratio flight.first_class_price 1 travellers %}
+							{% endif %} </td>
+						<td> <a href="/flight{{ flight.id }}{{ travellers }}{{ cls }}"> Select </a> </td>
+					</tr>
+				{% endif %}
+			</table>
+			<br>
+		{% endfor %}
+	</form>
+	
+</body>
+</html>

@@ -1,0 +1,27 @@
+<html>
+<body>
+	<form action="payment_method" method="POST">
+	{% csrf_token %}
+	<input type="text" name="mobno" required placeholder="Mobile No" pattern="[0-9]{10}"> <br>
+	<input type="text" required placeholder="First Name" name="fname"> <br>
+	<input type="text" required placeholder="Last Name" name="lname"> <br>
+	<select name="paymethod" required>
+		<option value="card"> Credit/Debit Card </option>
+	</select> <br>
+	<table>
+			<tr>
+				<td> {{ travellers }} </td>
+				<td> {{ price }} </td>
+				<td> {{ flight.date }} </td>
+				<td> {{ flight.company }} </td>
+				<td> {{ flight.flight_no }} </td>
+				<td> {{ flight.departure_time }} </td>
+				<td> {{ flight.arrival_time }} </td>
+				<td> {{ flight.source }} </td>
+				<td> {{ flight.destination }} </td>
+			</tr>
+	</table>
+	<button type="submit"> Continue </button>
+	</form>
+</body>
+</html>

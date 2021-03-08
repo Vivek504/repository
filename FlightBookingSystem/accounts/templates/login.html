@@ -3,20 +3,39 @@
 	<title> Login </title>
 </head>
 <body>
-	<form action="login" method="POST">
-		{% csrf_token %}
-		<input type="text" required autocomplete="off" placeholder="username" name="username">
-		<br> </br>
-		<input type="password" required autocomplete="off" placeholder="password" name="password">
-		<br> </br>
-		<input type="submit" value="login">
-		<br> </br>
-		<a href="register"> Create account </a>
-	</form>
-	<div>
-		{% for message in messages %}
-		<h3> {{message}} </h3>
-		{% endfor %}
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'accounts/login_style.css' %}"/>
+	<div class="wrapper">
+		<div class="title">
+			Login Form
+		</div>
+		<form action="login" method="POST">
+			{% csrf_token %}
+			<div class="field">
+				<input type="text" required name="username">
+				<label>Username</label>
+			</div>
+			<div class="field">
+				<input type="password" required name="password">
+				<label>Password</label>
+			</div>
+			<div class="content">
+				<div class="pass-link">
+					<a href="#">Forgot password?</a>
+				</div>
+			</div>
+			<div class="field">
+				<input type="submit" value="Login">
+			</div>
+			<div class="signup-link">
+				Don't have an account? <a href="register"> Register </a>
+			</div>
+		</form>
+		<div>
+			{% for message in messages %}
+			<h3 align="center"> {{message}} </h3>
+			{% endfor %}
+		</div>
 	</div>
 </body>
 </html>

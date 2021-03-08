@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'searchFlight',
+    'paymentModule',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'FlightBookingSystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'flight_booking_system',
+        'NAME': 'flight_booking_system_db',
 	    'USER':'root',
 	    'PASSWORD':'',
 	    'HOST':'127.0.0.1',

@@ -1,0 +1,21 @@
+<html>
+<body>
+	<table>
+		{% for user in data %}
+			<tr>
+				<td> {{ user.first_name }} </td>
+				<td> {{ user.last_name }} </td>
+				<td> {{ user.travellers }} </td>
+				<td> {{ user.price }} </td>
+				<td> {{ user.departure_date }} </td>
+				<td> {{ user.company }} </td>
+				<td> {{ user.flight_no }} </td>
+				<td> {{ user.departure_time }} </td>
+				<td> {{ user.arrival_time }} </td>
+				<td> {{ user.source }} </td>
+				<td> {{ user.destination }} </td>
+			</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>

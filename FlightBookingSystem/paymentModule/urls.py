@@ -6,5 +6,8 @@ urlpatterns = [
     path("view_ticket",views.view_ticket,name="view_ticket"),
     path("payment_method",views.payment_method,name="payment_method"),
     path("make_payment",views.make_payment,name="make_payment"),
-    path("flight<int:flight_id><int:travellers><str:cls>",views.payment,name="flight")
+    path("flight<int:flight_id><int:travellers><str:cls>",views.payment,name="flight"),
+    path("cancel_ticket_form<int:ticket_id>",views.cancel_ticket_form,name="cancel_ticket_form"),
+    path("cancel_ticket",views.cancel_ticket,name="cancel_ticket")
+
 ]

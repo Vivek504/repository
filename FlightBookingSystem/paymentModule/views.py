@@ -2,6 +2,10 @@ from django.shortcuts import render,redirect
 from .models import paymentHistory
 from .models import ticket_details
 from searchFlight.models import flight_details
+from django.conf import settings 
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.contrib.auth.models import User,auth
 
 # Create your views here.
 
@@ -24,8 +28,10 @@ def payment_method(request):
         first_name=request.POST.get('fname','')
         last_name=request.POST.get('lname','')
         mobile_no=request.POST.get('mobno','')
+        email=request.POST.get('email','')
         payment_method=request.POST.get('paymethod','')
         request.session['mobile_no']=mobile_no
+        request.session['email']=email
         request.session['payment_method']=payment_method
         request.session['first_name']=first_name
         request.session['last_name']=last_name
@@ -37,6 +43,7 @@ def make_payment(request):
         first_name=request.session['first_name']
         last_name=request.session['last_name']
         mobile_no=request.session['mobile_no']
+        email=request.session['email']
         payment_method=request.session['payment_method']
         flight_id=request.session['flight_id']
         flight=flight_details.objects.get(id=flight_id)
@@ -54,10 +61,17 @@ def make_payment(request):
         departure_time=flight.departure_time,arrival_time=flight.arrival_time,source=flight.source,destination=flight.destination,departure_date=flight.date,
         travellers=travellers)
         ticket.save()
+        ticket_id=ticket.id
         confirm_seat=flight.capacity - travellers
         seat=flight_details.objects.get(id=flight_id)
         seat.capacity=confirm_seat
         seat.save()
+        
+        subject = 'Thank you'
+        message = f'Ticket reservation is done successfully.{ticket_id}'
+        email_from = settings.EMAIL_HOST_USER 
+        recipient_list = [email, ] 
+        send_mail( subject, message, email_from, recipient_list ) 
         return redirect('home')
     else:
         return render(request,"home.html")
@@ -71,3 +85,25 @@ def view_ticket(request):
     current_user=request.user
     data=ticket_details.objects.all().filter(username=current_user)
     return render(request,"view_ticket.html",{'data':data})
+
+def cancel_ticket_form(request,ticket_id):
+    request.session['ticket_id']=ticket_id
+    return render(request,"cancel_ticket.html")
+
+def cancel_ticket(request):
+    if request.method == 'POST':
+        username=request.POST.get('username','')
+        password=request.POST.get('password','')    
+        
+        user=auth.authenticate(username=username,password=password)
+        if user is not None:
+            ticket_id=request.session['ticket_id']
+            ticket=ticket_details.objects.get(id=ticket_id)
+            ticket.delete()
+            return redirect('home')
+        else:
+            messages.info(request,'Invalid username or password')
+            print("123")
+            return render(request,'cancel_ticket.html')
+    else:
+        return redirect("login")

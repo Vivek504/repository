@@ -1,0 +1,14 @@
+<html>
+    <body>
+        <form action="cancel_ticket" method="POST">
+        {% csrf_token %}
+            Ticket id:<input type="text" name="ticket_id"> <br>
+            Username:<input type="text" name="username"> <br>
+            Password:<input type="password" name="password"> <br>
+            <input type="submit" value="Submit"> 
+        </form>
+        {% for message in messages %}
+			<h3 align="center"> {{message}} </h3>
+		{% endfor %}
+    </body>
+</html>

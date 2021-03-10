@@ -1,14 +1,41 @@
 <html>
 <body>
-	<form action="payment_method" method="POST">
-	{% csrf_token %}
-	<input type="text" name="mobno" required placeholder="Mobile No" pattern="[0-9]{10}"> <br>
-	<input type="text" required placeholder="First Name" name="fname"> <br>
-	<input type="text" required placeholder="Last Name" name="lname"> <br>
-	<input type="email" required placeholder="abc@xyz.com" name="email"> <br>
-	<select name="paymethod" required>
-		<option value="card"> Credit/Debit Card </option>
-	</select> <br>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/payment_style.css' %}"/>
+	<div class="wrapper">
+		<div class="title">
+			Payment
+		</div>
+		<form action="payment_method" method="POST">
+			{% csrf_token %}
+			<div class="field">
+				<input type="text" required name="fname">
+				<label>Firstname</label>
+			</div>
+			<div class="field">
+				<input type="text" required name="lname">
+				<label>Last name</label>
+			</div>
+			<div class="field">
+				<input type="text" name="mobno" required pattern="[0-9]{10}">
+				<label>Mobile Number</label>
+			</div>
+			<div class="field">
+				<input type="email" required name="email">
+				<label> E-mail </label>
+			</div>
+			<br>
+			<div class="select">
+				<select name="paymethod" required>
+					<option selected disabled> Select Payment Method </option>
+					<option value="card"> Credit/Debit </option>
+				</select>
+			</div>
+			<div class="field">
+				<input type="submit" value="Continue">
+			</div>
+		</form>
+	</div>
 	<table>
 			<tr>
 				<td> {{ travellers }} </td>
@@ -22,7 +49,5 @@
 				<td> {{ flight.destination }} </td>
 			</tr>
 	</table>
-	<button type="submit"> Continue </button>
-	</form>
 </body>
 </html>

@@ -9,5 +9,4 @@ urlpatterns = [
     path("flight<int:flight_id><int:travellers><str:cls>",views.payment,name="flight"),
     path("cancel_ticket_form<int:ticket_id>",views.cancel_ticket_form,name="cancel_ticket_form"),
     path("cancel_ticket",views.cancel_ticket,name="cancel_ticket")
-
 ]

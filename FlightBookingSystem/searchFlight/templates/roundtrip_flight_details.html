@@ -1,6 +1,17 @@
 <html>
 <head>
 	<title> Flight Details </title>
+	<script type="text/Javascript">
+		function select_flight() {
+			var flights=document.getElementsByName('select1');
+			var flight_value;
+			for(var i = 0; i < flights.length; i++){
+    			if(flights[i].checked){
+        			flight_value = flights[i].value;
+   				}
+			}
+		}
+	</script>
 	<style>
 	table{
 		border: 1px solid black;
@@ -13,7 +24,7 @@
 	</style>
 </head>
 <body>
-	<form action="roundtrip_payment" method="POST">
+	<form action="roundtrip_flight_details.html" method="POST">
 	{% csrf_token %}
 		<h3> {{ source }} -> {{ destination }} </h3>
 		{% for flight in data1 %}
@@ -37,7 +48,7 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <a href="/flight{{ flight.id }}{{ travellers }}{{ cls }}"> Select </a> </td>
+						<td> <input type="radio" value="{{ flight.id }}" name="select1"> </td>
 					</tr>
 				{% elif flight.date == current_date and flight.departure_time > current_time %}
 					<tr>
@@ -58,13 +69,13 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <a href="/flight{{ flight.id }}{{ travellers }}{{ cls }}"> Select </a> </td>
+						<td> <input type="radio" value="{{ flight.id }}" name="select1"> </td>
 					</tr>
 				{% endif %}
 			</table>
 			<br>
 		{% endfor %}
-	
+		
 		<h3> {{ destination }} -> {{ source }} </h3>
 		{% for flight in data2 %}
 			<table width="100%">
@@ -87,7 +98,7 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <a href="/flight{{ flight.id }}{{ travellers }}{{ cls }}"> Select </a> </td>
+						<td> <input type="radio" value="{{ flight.id }}" name="select2"> </td>
 					</tr>
 				{% elif flight.date == current_date and flight.departure_time > current_time %}
 					<tr>
@@ -108,13 +119,14 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <a href="/flight{{ flight.id }}{{ travellers }}{{ cls }}"> Select </a> </td>
+						<td> <input type="radio" value="{{ flight.id }}" name="select2"> </td>
 					</tr>
 				{% endif %}
 			</table>
 			<br>
-		{% endfor %}
+		{% endfor %}	
+		<input type="submit" onclick="select_flight()"/>
+		<b id="selectedflight1"></b>
 	</form>
-	
 </body>
 </html>

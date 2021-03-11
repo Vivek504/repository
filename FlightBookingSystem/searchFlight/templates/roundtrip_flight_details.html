@@ -1,17 +1,6 @@
 <html>
 <head>
 	<title> Flight Details </title>
-	<script type="text/Javascript">
-		function select_flight() {
-			var flights=document.getElementsByName('select1');
-			var flight_value;
-			for(var i = 0; i < flights.length; i++){
-    			if(flights[i].checked){
-        			flight_value = flights[i].value;
-   				}
-			}
-		}
-	</script>
 	<style>
 	table{
 		border: 1px solid black;
@@ -24,8 +13,6 @@
 	</style>
 </head>
 <body>
-	<form action="roundtrip_flight_details.html" method="POST">
-	{% csrf_token %}
 		<h3> {{ source }} -> {{ destination }} </h3>
 		{% for flight in data1 %}
 			<table width="100%">
@@ -48,7 +35,7 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <input type="radio" value="{{ flight.id }}" name="select1"> </td>
+						<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select1"> </td>
 					</tr>
 				{% elif flight.date == current_date and flight.departure_time > current_time %}
 					<tr>
@@ -69,7 +56,7 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <input type="radio" value="{{ flight.id }}" name="select1"> </td>
+						<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select1"> </td>
 					</tr>
 				{% endif %}
 			</table>
@@ -98,7 +85,7 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <input type="radio" value="{{ flight.id }}" name="select2"> </td>
+						<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select2"> </td>
 					</tr>
 				{% elif flight.date == current_date and flight.departure_time > current_time %}
 					<tr>
@@ -119,14 +106,64 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <input type="radio" value="{{ flight.id }}" name="select2"> </td>
+						<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select2"> </td>
 					</tr>
 				{% endif %}
 			</table>
 			<br>
 		{% endfor %}	
-		<input type="submit" onclick="select_flight()"/>
-		<b id="selectedflight1"></b>
-	</form>
+		<button type="button" onclick="displayFlight()"> Select </button>
+		<div id="selectedflight1_1"></div>
+		<div id="selectedflight1_2"></div>
+		<div id="selectedflight1_3"></div>
+		<div id="selectedflight2_1"></div>
+		<div id="selectedflight2_2"></div>
+		<div id="selectedflight2_3"></div>
+		<div id="tot_price"></div>
+		<script>
+			function displayFlight(){
+				var ele1=document.getElementsByName('select1');
+				var ele2=document.getElementsByName('select2');
+				for(i=0;i<ele1.length;i++){
+					if(ele1[i].checked){
+						var originalEle1=ele1[i].value;
+						originalEle1=originalEle1.split(' ');
+						var separatedEle1=new Array();
+						for(var i=0;i<originalEle1.length;i++){
+							separatedEle1.push(originalEle1[i]);
+						}
+						document.getElementById('selectedflight1_1').innerHTML=separatedEle1[0];
+						document.getElementById('selectedflight1_2').innerHTML=separatedEle1[1];
+						document.getElementById('selectedflight1_3').innerHTML=separatedEle1[2];
+					}
+				}
+				for(i=0;i<ele2.length;i++){
+					if(ele2[i].checked){
+						var originalEle2=ele2[i].value;
+						originalEle2=originalEle2.split(' ');
+						var separatedEle2=new Array();
+						for(var i=0;i<originalEle2.length;i++){
+							separatedEle2.push(originalEle2[i]);
+						}
+						document.getElementById('selectedflight2_1').innerHTML=separatedEle2[0];
+						document.getElementById('selectedflight2_2').innerHTML=separatedEle2[1];
+						document.getElementById('selectedflight2_3').innerHTML=separatedEle2[2];
+					}
+				}
+				if(separatedEle1[2]=="economy" && separatedEle2[2]=="economy"){
+					var price=(separatedEle1[1]*separatedEle1[3])+(separatedEle2[1]*separatedEle2[3]);
+				}
+				else if(separatedEle1[2]=="business" && separatedEle2[2]=="business"){
+					var price=(separatedEle1[1]*separatedEle1[4])+(separatedEle2[1]*separatedEle2[4]);
+				}
+				else{
+					var price=(separatedEle1[1]*separatedEle1[5])+(separatedEle2[1]*separatedEle2[5]);
+				}
+				document.getElementById('tot_price').innerHTML=price;
+				var loc="roundtrip_flight"+separatedEle1[0]+","+separatedEle2[0]+","+separatedEle2[1]+","+separatedEle2[2];
+				document.write('<a href="' + loc + '">Select</a>');
+				document.write(separatedEle2[2]);
+			}
+		</script>
 </body>
 </html>

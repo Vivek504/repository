@@ -93,17 +93,28 @@ def cancel_ticket_form(request,ticket_id):
 def cancel_ticket(request):
     if request.method == 'POST':
         username=request.POST.get('username','')
-        password=request.POST.get('password','')    
-        
-        user=auth.authenticate(username=username,password=password)
-        if user is not None:
-            ticket_id=request.session['ticket_id']
-            ticket=ticket_details.objects.get(id=ticket_id)
-            ticket.delete()
-            return redirect('home')
+        password=request.POST.get('password','')
+        if username==request.user:    
+            user=auth.authenticate(username=username,password=password)
+            if user is not None:
+                ticket_ids=ticket_details.objects.all().filter(username=request.user)
+                ticket_id=request.session['ticket_id']
+                for ticket in ticket_ids:
+                    if ticket.id==ticket_id:
+                        ticket=ticket_details.objects.get(id=ticket_id)
+                        ticket.delete()
+                        return redirect('home')
+                    else:
+                        messages.info(request,'Somethong went wrong!!')
+                        return render(request,'cancel_ticket.html')
+            else:
+                messages.info(request,'Invalid username or password')
+                return render(request,'cancel_ticket.html')
         else:
             messages.info(request,'Invalid username or password')
-            print("123")
             return render(request,'cancel_ticket.html')
     else:
         return redirect("login")
+
+def roundtrip_payment(request,flight_id1,flight_id2,travellers,cls):
+    return render(request,"roundtrip_payment.html",{'flight_id1':flight_id1,'flight_id2':flight_id2,'travellers':travellers,'cls':cls})

@@ -1,9 +1,66 @@
 <html>
 <body>
-    Hello
-    <br>
-    {{ flight_id1 }}
-    <br>
-    {{ flight_id2 }}
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/payment_style.css' %}"/>
+	<div class="wrapper">
+		<div class="title">
+			Payment
+		</div>
+		<form action="roundtrip_payment_method" method="POST">
+			{% csrf_token %}
+			<div class="field">
+				<input type="text" required name="fname">
+				<label>Firstname</label>
+			</div>
+			<div class="field">
+				<input type="text" required name="lname">
+				<label>Last name</label>
+			</div>
+			<div class="field">
+				<input type="text" name="mobno" required pattern="[0-9]{10}">
+				<label>Mobile Number</label>
+			</div>
+			<div class="field">
+				<input type="email" required name="email">
+				<label> E-mail </label>
+			</div>
+			<br>
+			<div class="select">
+				<select name="paymethod" required>
+					<option selected disabled> Select Payment Method </option>
+					<option value="card"> Credit/Debit </option>
+				</select>
+			</div>
+			<div class="field">
+				<input type="submit" value="Continue">
+			</div>
+		</form>
+	</div>
+	<table>
+			<tr>
+				<td> {{ travellers }} </td>
+				<td> {{ price }} </td>
+				<td> {{ flight1.date }} </td>
+				<td> {{ flight1.company }} </td>
+				<td> {{ flight1.flight_no }} </td>
+				<td> {{ flight1.departure_time }} </td>
+				<td> {{ flight1.arrival_time }} </td>
+				<td> {{ flight1.source }} </td>
+				<td> {{ flight1.destination }} </td>
+			</tr>
+	</table>
+    <table>
+        <tr>
+            <td> {{ travellers }} </td>
+            <td> {{ price }} </td>
+            <td> {{ flight2.date }} </td>
+            <td> {{ flight2.company }} </td>
+            <td> {{ flight2.flight_no }} </td>
+            <td> {{ flight2.departure_time }} </td>
+            <td> {{ flight2.arrival_time }} </td>
+            <td> {{ flight2.source }} </td>
+            <td> {{ flight2.destination }} </td>
+        </tr>
+</table>
 </body>
 </html>

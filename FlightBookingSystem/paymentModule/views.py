@@ -117,4 +117,84 @@ def cancel_ticket(request):
         return redirect("login")
 
 def roundtrip_payment(request,flight_id1,flight_id2,travellers,cls):
-    return render(request,"roundtrip_payment.html",{'flight_id1':flight_id1,'flight_id2':flight_id2,'travellers':travellers,'cls':cls})
+    going_flight=flight_details.objects.get(id=flight_id1)
+    return_flight=flight_details.objects.get(id=flight_id2)
+    request.session['flight_id1']=flight_id1
+    request.session['flight_id2']=flight_id2
+    request.session['cls']=cls
+    request.session['travellers']=travellers
+    if cls=="economy":
+        price=(going_flight.economy_price*travellers)+(return_flight.economy_price*travellers)
+    elif cls=="business":
+        price=(going_flight.business_price*travellers)+(return_flight.business_price*travellers)
+    else:
+        price=(going_flight.first_class_price*travellers)+(return_flight.first_class_price*travellers)
+    return render(request,"roundtrip_payment.html",{'flight1':going_flight,'flight2':return_flight,'price':price,'travellers':travellers})
+
+def roundtrip_payment_method(request):
+    if request.method == 'POST':
+        current_user=request.user
+        first_name=request.POST.get('fname','')
+        last_name=request.POST.get('lname','')
+        mobile_no=request.POST.get('mobno','')
+        email=request.POST.get('email','')
+        payment_method=request.POST.get('paymethod','')
+        request.session['mobile_no']=mobile_no
+        request.session['email']=email
+        request.session['payment_method']=payment_method
+        request.session['first_name']=first_name
+        request.session['last_name']=last_name
+        return render(request,"roundtrip_make_payment.html")
+
+def roundtrip_make_payment(request):
+    if request.method == 'POST':
+        current_user=request.user
+        first_name=request.session['first_name']
+        last_name=request.session['last_name']
+        mobile_no=request.session['mobile_no']
+        email=request.session['email']
+        payment_method=request.session['payment_method']
+        flight_id1=request.session['flight_id1']
+        flight_id2=request.session['flight_id2']
+        flight1=flight_details.objects.get(id=flight_id1)
+        flight2=flight_details.objects.get(id=flight_id2)
+        cls=request.session['cls']
+        travellers=request.session['travellers']
+        if cls=="economy":
+            price1=flight1.economy_price*travellers
+            price2=flight2.economy_price*travellers
+        elif cls=="business":
+            price1=flight1.business_price*travellers
+            price2=flight2.business_price*travellers
+        else:
+            price1=flight1.first_class_price*travellers
+            price2=flight2.first_class_price*travellers
+        price=price1+price2    
+        p=paymentHistory(username=current_user,first_name=first_name,last_name=last_name,mobile_no=mobile_no,payment_method=payment_method)
+        p.save()
+        going_ticket=ticket_details(username=current_user,flight_id=flight_id1,first_name=first_name,last_name=last_name,price=price1,company=flight1.company,flight_no=flight1.flight_no,
+        departure_time=flight1.departure_time,arrival_time=flight1.arrival_time,source=flight1.source,destination=flight1.destination,departure_date=flight1.date,
+        travellers=travellers)
+        going_ticket.save()
+        return_ticket=ticket_details(username=current_user,flight_id=flight_id2,first_name=first_name,last_name=last_name,price=price2,company=flight2.company,flight_no=flight2.flight_no,
+        departure_time=flight2.departure_time,arrival_time=flight2.arrival_time,source=flight2.source,destination=flight2.destination,departure_date=flight2.date,
+        travellers=travellers)
+        return_ticket.save()
+        going_ticket_id=going_ticket.id
+        return_ticket_id=return_ticket.id
+        confirm_seat1=flight1.capacity - travellers
+        confirm_seat2=flight2.capacity - travellers
+        seat1=flight_details.objects.get(id=flight_id1)
+        seat1.capacity=confirm_seat1
+        seat1.save()
+        seat2=flight_details.objects.get(id=flight_id2)
+        seat2.capacity=confirm_seat2
+        seat2.save()
+        subject = 'Thank you'
+        message = f'Ticket reservation is done successfully.{going_ticket_id} and {return_ticket_id} '
+        email_from = settings.EMAIL_HOST_USER 
+        recipient_list = [email, ] 
+        send_mail( subject, message, email_from, recipient_list ) 
+        return redirect('home')
+    else:
+        return render(request,"home.html")

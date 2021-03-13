@@ -35,7 +35,10 @@ def payment_method(request):
         request.session['payment_method']=payment_method
         request.session['first_name']=first_name
         request.session['last_name']=last_name
-        return render(request,"make_payment.html")
+        if payment_method=='debit':
+            return render(request,"debit.html")
+        elif payment_method=='credit':
+            return render(request,"credit.html")
 
 def make_payment(request):
     if request.method == 'POST':
@@ -144,7 +147,10 @@ def roundtrip_payment_method(request):
         request.session['payment_method']=payment_method
         request.session['first_name']=first_name
         request.session['last_name']=last_name
-        return render(request,"roundtrip_make_payment.html")
+        if payment_method=='credit':
+            return render(request,"roundtrip_credit.html")
+        elif payment_method=='debit':
+            return render(request,"roundtrip_debit.html")
 
 def roundtrip_make_payment(request):
     if request.method == 'POST':

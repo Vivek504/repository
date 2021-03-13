@@ -1,0 +1,27 @@
+<html>
+<body>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/make_payment_style.css' %}"/>
+	<div class="wrapper">
+		<div class="title">
+			Make Payment
+		</div>
+		<form action="make_payment" method="POST">
+			{% csrf_token %}
+			<div class="field">
+				<label> Card Number </label>
+				<input required name="cardno" pattern=".{16,19}" title="16 to 19 characters">
+			</div>
+			<br>
+			<div class="field">
+				<label> Expiry Date:</label>
+				<input required type="month" id="valid">
+			</div>
+			<br>
+			<div class="field">
+				<input type="submit" value="Make Payment">
+			</div>
+		</form>
+	</div>
+</body>
+</html>

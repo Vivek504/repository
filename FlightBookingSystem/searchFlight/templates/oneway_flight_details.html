@@ -37,7 +37,7 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <a href="/flight{{ flight.id }}{{ travellers }}{{ cls }}"> Select </a> </td>
+						<td> <a href="/flight{{ flight.id }},{{ travellers }},{{ cls }}"> Select </a> </td>
 					</tr>
 				{% elif flight.date == current_date and flight.departure_time > current_time %}
 					<tr>
@@ -58,7 +58,7 @@
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
 							{% endif %} </td>
-						<td> <a href="/flight{{ flight.id }}{{ travellers }}{{ cls }}"> Select </a> </td>
+						<td> <a href="/flight{{ flight.id }},{{ travellers }},{{ cls }}"> Select </a> </td>
 					</tr>
 				{% endif %}
 			</table>

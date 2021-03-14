@@ -113,17 +113,15 @@
 			<br>
 		{% endfor %}	
 		<button type="button" onclick="displayFlight()"> Select </button>
-		<div id="selectedflight1_1"></div>
-		<div id="selectedflight1_2"></div>
-		<div id="selectedflight1_3"></div>
-		<div id="selectedflight2_1"></div>
-		<div id="selectedflight2_2"></div>
-		<div id="selectedflight2_3"></div>
-		<div id="tot_price"></div>
+		<div id="price"></div>
+		<div id="error"></div>
+		<div id="select"></div>
 		<script>
 			function displayFlight(){
 				var ele1=document.getElementsByName('select1');
 				var ele2=document.getElementsByName('select2');
+				count1=0;
+				count2=0;
 				for(i=0;i<ele1.length;i++){
 					if(ele1[i].checked){
 						var originalEle1=ele1[i].value;
@@ -132,9 +130,7 @@
 						for(var i=0;i<originalEle1.length;i++){
 							separatedEle1.push(originalEle1[i]);
 						}
-						document.getElementById('selectedflight1_1').innerHTML=separatedEle1[0];
-						document.getElementById('selectedflight1_2').innerHTML=separatedEle1[1];
-						document.getElementById('selectedflight1_3').innerHTML=separatedEle1[2];
+						count1=1;
 					}
 				}
 				for(i=0;i<ele2.length;i++){
@@ -145,10 +141,11 @@
 						for(var i=0;i<originalEle2.length;i++){
 							separatedEle2.push(originalEle2[i]);
 						}
-						document.getElementById('selectedflight2_1').innerHTML=separatedEle2[0];
-						document.getElementById('selectedflight2_2').innerHTML=separatedEle2[1];
-						document.getElementById('selectedflight2_3').innerHTML=separatedEle2[2];
+						count2=1;
 					}
+				}
+				if(count1==0 || count2==0){
+					document.getElementById('error').innerHTML='Please select two flights';
 				}
 				if(separatedEle1[2]=="economy" && separatedEle2[2]=="economy"){
 					var price=(separatedEle1[1]*separatedEle1[3])+(separatedEle2[1]*separatedEle2[3]);
@@ -159,10 +156,12 @@
 				else{
 					var price=(separatedEle1[1]*separatedEle1[5])+(separatedEle2[1]*separatedEle2[5]);
 				}
-				document.getElementById('tot_price').innerHTML=price;
-				var loc="roundtrip_flight"+separatedEle1[0]+","+separatedEle2[0]+","+separatedEle2[1]+","+separatedEle2[2];
-				document.write('<a href="' + loc + '">Select</a>');
-				document.write(separatedEle2[2]);
+				if(count1==1 && count2==1){
+					var loc="roundtrip_flight"+separatedEle1[0]+","+separatedEle2[0]+","+separatedEle2[1]+","+separatedEle2[2];
+					document.getElementById('price').innerHTML='Total Price : '+price+'<br>';
+					document.getElementById('error').innerHTML='';
+					document.getElementById('select').innerHTML='<a href="' + loc + '">Book</a>';
+				}
 			}
 		</script>
 </body>

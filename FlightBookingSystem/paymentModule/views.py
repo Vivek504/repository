@@ -97,7 +97,7 @@ def cancel_ticket(request):
     if request.method == 'POST':
         username=request.POST.get('username','')
         password=request.POST.get('password','')
-        if username==request.user:    
+        if username==request.user.username:    
             user=auth.authenticate(username=username,password=password)
             if user is not None:
                 ticket_ids=ticket_details.objects.all().filter(username=request.user)

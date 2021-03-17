@@ -6,6 +6,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
+from django.template.loader import render_to_string
 
 # Create your views here.
 
@@ -14,13 +15,13 @@ def payment(request,flight_id,travellers,cls):
     request.session['flight_id']=flight_id
     request.session['cls']=cls
     request.session['travellers']=travellers
-    if cls=="economy":
+    if cls=="Economy":
         price=flight.economy_price*travellers
-    elif cls=="business":
+    elif cls=="Business":
         price=flight.business_price*travellers
     else:
         price=flight.first_class_price*travellers
-    return render(request,"payment.html",{'flight':flight,'price':price,'travellers':travellers})
+    return render(request,"payment.html",{'flight':flight,'price':price,'travellers':travellers,'cls':cls})
     
 def payment_method(request):
     if request.method == 'POST':
@@ -52,9 +53,9 @@ def make_payment(request):
         flight=flight_details.objects.get(id=flight_id)
         cls=request.session['cls']
         travellers=request.session['travellers']
-        if cls=="economy":
+        if cls=="Economy":
             price=flight.economy_price*travellers
-        elif cls=="business":
+        elif cls=="Business":
             price=flight.business_price*travellers
         else:
             price=flight.first_class_price*travellers
@@ -71,7 +72,8 @@ def make_payment(request):
         seat.save()
         
         subject = 'Thank you'
-        message = f'Ticket reservation is done successfully.{ticket_id}'
+        # message = f'Ticket reservation is done successfully.Flight details are as follows:Flight Number:{{flight.flight_no}}'
+        message = render_to_string('mail_file.html',{'flight':flight,'cls':cls,'travellers':travellers})
         email_from = settings.EMAIL_HOST_USER 
         recipient_list = [email, ] 
         send_mail( subject, message, email_from, recipient_list ) 
@@ -97,11 +99,11 @@ def cancel_ticket(request):
     if request.method == 'POST':
         username=request.POST.get('username','')
         password=request.POST.get('password','')
+        ticket_id=request.session['ticket_id']
         if username==request.user.username:    
             user=auth.authenticate(username=username,password=password)
             if user is not None:
                 ticket_ids=ticket_details.objects.all().filter(username=request.user)
-                ticket_id=request.session['ticket_id']
                 for ticket in ticket_ids:
                     if ticket.id==ticket_id:
                         ticket=ticket_details.objects.get(id=ticket_id)
@@ -109,15 +111,18 @@ def cancel_ticket(request):
                         return redirect('home')
                     else:
                         messages.info(request,'Somethong went wrong!!')
-                        return render(request,'cancel_ticket.html')
+                        return render(request,"cancel_ticket_error.html",{'ticket_id':ticket_id})    
             else:
                 messages.info(request,'Invalid username or password')
-                return render(request,'cancel_ticket.html')
+                return render(request,"cancel_ticket_error.html",{'ticket_id':ticket_id})    
         else:
             messages.info(request,'Invalid username or password')
-            return render(request,'cancel_ticket.html')
+            return render(request,"cancel_ticket_error.html",{'ticket_id':ticket_id})
     else:
         return redirect("login")
+
+def cancel_ticket_error(request):
+    return render(request,"cancel_ticket_error.html")
 
 def roundtrip_payment(request,flight_id1,flight_id2,travellers,cls):
     going_flight=flight_details.objects.get(id=flight_id1)
@@ -126,9 +131,9 @@ def roundtrip_payment(request,flight_id1,flight_id2,travellers,cls):
     request.session['flight_id2']=flight_id2
     request.session['cls']=cls
     request.session['travellers']=travellers
-    if cls=="economy":
+    if cls=="Economy":
         price=(going_flight.economy_price*travellers)+(return_flight.economy_price*travellers)
-    elif cls=="business":
+    elif cls=="Business":
         price=(going_flight.business_price*travellers)+(return_flight.business_price*travellers)
     else:
         price=(going_flight.first_class_price*travellers)+(return_flight.first_class_price*travellers)
@@ -166,10 +171,10 @@ def roundtrip_make_payment(request):
         flight2=flight_details.objects.get(id=flight_id2)
         cls=request.session['cls']
         travellers=request.session['travellers']
-        if cls=="economy":
+        if cls=="Economy":
             price1=flight1.economy_price*travellers
             price2=flight2.economy_price*travellers
-        elif cls=="business":
+        elif cls=="Business":
             price1=flight1.business_price*travellers
             price2=flight2.business_price*travellers
         else:

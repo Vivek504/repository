@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: sans-serif;
 }
 html,body{
   display: grid;
@@ -11,6 +11,15 @@ html,body{
   place-items: center;
   background: #f2f2f2;
   /* background: linear-gradient(-135deg, #c850c0, #4158d0); */
+}
+.form-box{
+	width: 1520px;
+	height: 65px;
+	position: relative;
+	margin: 1% auto;
+	background: #FFFFFF;
+	padding: 5px;
+	overflow: hidden;
 }
 ::selection{
   background: #4158d0;

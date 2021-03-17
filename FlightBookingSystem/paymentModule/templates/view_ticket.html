@@ -1,22 +1,33 @@
 <html>
+
 <body>
-	<table>
-		{% for user in data %}
-			<tr>
-				<td> {{ user.first_name }} </td>
-				<td> {{ user.last_name }} </td>
-				<td> {{ user.travellers }} </td>
-				<td> {{ user.price }} </td>
-				<td> {{ user.departure_date }} </td>
-				<td> {{ user.company }} </td>
-				<td> {{ user.flight_no }} </td>
-				<td> {{ user.departure_time }} </td>
-				<td> {{ user.arrival_time }} </td>
-				<td> {{ user.source }} </td>
-				<td> {{ user.destination }} </td>
-				<td> <a href="/cancel_ticket_form{{ user.id }}">Cancel Ticket</a></td>
-			</tr>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/payment_style.css' %}" />
+	<div class="hero">
+		{% for flight in data %}
+		<div class="form-box">
+			<table width="100%">
+				<tr>
+					<td> {{ flight.company }} </td>
+					<td rowspan="2"> {{ flight.source }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span>
+						&nbsp;&nbsp; {{ flight.destination }}</td>
+					<td> {{ flight.departure_date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span>
+						&nbsp;&nbsp; {{flight.arrival_date }} </td>
+					<td> {{ flight.travellers }} Travellers </td>
+					<td> {{ flight.price }} &#8377;</td>
+				</tr>
+				<tr>
+					<td> {{ flight.flight_no }} </td>
+					<td> {{ flight.departure_time }}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }}
+					</td>
+					<td> {{cls}} Class </td>
+					<td> <a href="/cancel_ticket_form{{ user.id }}">Cancel Ticket</a></td>
+				</tr>
+			</table>
+		</div>
 		{% endfor %}
-	</table>
+	</div>
 </body>
+
 </html>

@@ -11,5 +11,6 @@ urlpatterns = [
     path("cancel_ticket",views.cancel_ticket,name="cancel_ticket"),
     path("roundtrip_flight<int:flight_id1>,<int:flight_id2>,<int:travellers>,<str:cls>",views.roundtrip_payment,name="roundtrip_flight"),
     path("roundtrip_payment_method",views.roundtrip_payment_method,name="roundtrip_payment_method"),
-    path("roundtrip_make_payment",views.roundtrip_make_payment,name="roundtrip_make_payment")
+    path("roundtrip_make_payment",views.roundtrip_make_payment,name="roundtrip_make_payment"),
+    path("error",views.cancel_ticket_error,name="cancel_ticket_errro")
 ]

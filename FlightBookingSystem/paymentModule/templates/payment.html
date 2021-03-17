@@ -1,4 +1,17 @@
 <html>
+<head>
+	<title>Select Payment Method</title>
+	<style>
+		/* table{
+		border: 1px solid black;
+		border-collapse: collapse;
+	} */
+		table td {
+			column-width: 250px;
+			text-align: center;
+		}
+	</style>
+</head>
 <body>
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/payment_style.css' %}"/>
@@ -27,8 +40,8 @@
 			<br>
 			<div class="select">
 				<select name="paymethod" required>
-					<option selected disabled> Select Payment Method </option>
-					<option value="credit"> Credit card </option>
+					<option value="">Select Paymnet Method</option>
+					<option value="credit" > Credit card </option>
 					<option value="debit"> Debit card </option>
 				</select>
 			</div>
@@ -37,18 +50,21 @@
 			</div>
 		</form>
 	</div>
-	<table>
-			<tr>
-				<td> {{ travellers }} </td>
-				<td> {{ price }} </td>
-				<td> {{ flight.date }} </td>
-				<td> {{ flight.company }} </td>
-				<td> {{ flight.flight_no }} </td>
-				<td> {{ flight.departure_time }} </td>
-				<td> {{ flight.arrival_time }} </td>
-				<td> {{ flight.source }} </td>
-				<td> {{ flight.destination }} </td>
-			</tr>
+	<div class="form-box">
+	<table width="100%">
+		<tr>
+			<td> {{ flight.company }} </td>
+			<td rowspan="2"> {{ flight.source }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{ flight.destination }}</td>
+			<td> {{ flight.date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
+			<td> {{ travellers }} Travellers </td>
+			<td rowspan="2"> {{ price }} &#8377;</td>
+		</tr>
+		<tr>
+			<td> {{ flight.flight_no }} </td>
+			<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
+			<td> {{cls}} Class </td>
+		</tr>
 	</table>
+</div>
 </body>
 </html>

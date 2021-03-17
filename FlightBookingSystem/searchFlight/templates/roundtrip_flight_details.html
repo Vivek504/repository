@@ -28,9 +28,9 @@
 						<td> {{ flight.flight_no }} </td>
 						<td> {{ flight.departure_time }} </td>
 						<td> {{ flight.arrival_time }} </td>
-						<td> {% if cls == "economy" %}
+						<td> {% if cls == "Economy" %}
 								{% widthratio flight.economy_price 1 travellers %}
-							{% elif cls == "business" %}
+							{% elif cls == "Business" %}
 								{% widthratio flight.business_price 1 travellers %}
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
@@ -49,9 +49,9 @@
 						<td> {{ flight.flight_no }} </td>
 						<td> {{ flight.departure_time }} </td>
 						<td> {{ flight.arrival_time }} </td>
-						<td> {% if cls == "economy" %}
+						<td> {% if cls == "Economy" %}
 								{% widthratio flight.economy_price 1 travellers %}
-							{% elif cls == "business" %}
+							{% elif cls == "Business" %}
 								{% widthratio flight.business_price 1 travellers %}
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
@@ -78,9 +78,9 @@
 						<td> {{ flight.flight_no }} </td>
 						<td> {{ flight.departure_time }} </td>
 						<td> {{ flight.arrival_time }} </td>
-						<td> {% if cls == "economy" %}
+						<td> {% if cls == "Economy" %}
 								{% widthratio flight.economy_price 1 travellers %}
-							{% elif cls == "business" %}
+							{% elif cls == "Business" %}
 								{% widthratio flight.business_price 1 travellers %}
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
@@ -99,9 +99,9 @@
 						<td> {{ flight.flight_no }} </td>
 						<td> {{ flight.departure_time }} </td>
 						<td> {{ flight.arrival_time }} </td>
-						<td> {% if cls == "economy" %}
+						<td> {% if cls == "Economy" %}
 								{% widthratio flight.economy_price 1 travellers %}
-							{% elif cls == "business" %}
+							{% elif cls == "Business" %}
 								{% widthratio flight.business_price 1 travellers %}
 							{% else %}
 								{% widthratio flight.first_class_price 1 travellers %}
@@ -147,10 +147,10 @@
 				if(count1==0 || count2==0){
 					document.getElementById('error').innerHTML='Please select two flights';
 				}
-				if(separatedEle1[2]=="economy" && separatedEle2[2]=="economy"){
+				if(separatedEle1[2]=="Economy" && separatedEle2[2]=="Economy"){
 					var price=(separatedEle1[1]*separatedEle1[3])+(separatedEle2[1]*separatedEle2[3]);
 				}
-				else if(separatedEle1[2]=="business" && separatedEle2[2]=="business"){
+				else if(separatedEle1[2]=="Business" && separatedEle2[2]=="Business"){
 					var price=(separatedEle1[1]*separatedEle1[4])+(separatedEle2[1]*separatedEle2[4]);
 				}
 				else{

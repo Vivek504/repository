@@ -89,6 +89,9 @@ def view_payment_history(request):
 def view_ticket(request):
     current_user=request.user
     data=ticket_details.objects.all().filter(username=current_user)
+    count=ticket_details.objects.all().filter(username=current_user).count()
+    if count == 0:
+        messages.info(request,"No Tickets Found.")
     return render(request,"view_ticket.html",{'data':data})
 
 def cancel_ticket_form(request,ticket_id):
@@ -103,21 +106,27 @@ def cancel_ticket(request):
         if username==request.user.username:    
             user=auth.authenticate(username=username,password=password)
             if user is not None:
-                ticket_ids=ticket_details.objects.all().filter(username=request.user)
+                ticket_ids=ticket_details.objects.all().filter(username=request.user.username)
+                total_tickets=ticket_details.objects.all().filter(username=request.user.username).count()
+                count=0
                 for ticket in ticket_ids:
                     if ticket.id==ticket_id:
                         ticket=ticket_details.objects.get(id=ticket_id)
                         ticket.delete()
-                        return redirect('home')
+                        # return redirect('home')
                     else:
-                        messages.info(request,'Somethong went wrong!!')
-                        return render(request,"cancel_ticket_error.html",{'ticket_id':ticket_id})    
+                        count=count+1
+                if total_tickets==count+1:
+                    return redirect('home')
+                else:
+                    messages.info(request,'Somethong went wrong!!')
+                    return render(request,"cancel_ticket_error.html",{'ticket_id':ticket_id})
             else:
                 messages.info(request,'Invalid username or password')
-                return render(request,"cancel_ticket_error.html",{'ticket_id':ticket_id})    
+                return render(request,"cancel_ticket_error2.html",{'ticket_id':ticket_id})    
         else:
             messages.info(request,'Invalid username or password')
-            return render(request,"cancel_ticket_error.html",{'ticket_id':ticket_id})
+            return render(request,"cancel_ticket_error2.html",{'ticket_id':ticket_id})
     else:
         return redirect("login")
 

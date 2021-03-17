@@ -33,9 +33,9 @@
 						<td> {{ flight.company }} </td>
 						<td> {{ flight.date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
 						<td> {{ travellers }} Travellers </td>
-						<td> {% if cls == "economy" %}
+						<td> {% if cls == "Economy" %}
 							{% widthratio flight.economy_price 1 travellers %} &#8377;
-							{% elif cls == "business" %}
+							{% elif cls == "Business" %}
 							{% widthratio flight.business_price 1 travellers %} &#8377;
 							{% else %}
 							{% widthratio flight.first_class_price 1 travellers %} &#8377;
@@ -52,9 +52,9 @@
 						<td> {{ flight.company }} </td>
 						<td> {{ flight.date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
 						<td> {{ travellers }} Travellers </td>
-						<td> {% if cls == "economy" %}
+						<td> {% if cls == "Economy" %}
 							{% widthratio flight.economy_price 1 travellers %} &#8377;
-							{% elif cls == "business" %}
+							{% elif cls == "Business" %}
 							{% widthratio flight.business_price 1 travellers %} &#8377;
 							{% else %}
 							{% widthratio flight.first_class_price 1 travellers %} &#8377;

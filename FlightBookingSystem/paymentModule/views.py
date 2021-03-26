@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
 from django.template.loader import render_to_string
+from datetime import date
 
 # Create your views here.
 
@@ -63,7 +64,7 @@ def make_payment(request):
         p.save()
         ticket=ticket_details(username=current_user,flight_id=flight_id,first_name=first_name,last_name=last_name,price=price,company=flight.company,flight_no=flight.flight_no,
         departure_time=flight.departure_time,arrival_time=flight.arrival_time,source=flight.source,destination=flight.destination,departure_date=flight.date,
-        travellers=travellers)
+        arrival_date=flight.arrival_date,cls=cls,travellers=travellers)
         ticket.save()
         ticket_id=ticket.id
         confirm_seat=flight.capacity - travellers
@@ -88,11 +89,12 @@ def view_payment_history(request):
     
 def view_ticket(request):
     current_user=request.user
-    data=ticket_details.objects.all().filter(username=current_user)
+    data=ticket_details.objects.all().filter(username=current_user).order_by('departure_date').reverse()
     count=ticket_details.objects.all().filter(username=current_user).count()
     if count == 0:
         messages.info(request,"No Tickets Found.")
-    return render(request,"view_ticket.html",{'data':data})
+    current_date=date.today()
+    return render(request,"view_ticket.html",{'data':data,'current_date':current_date})
 
 def cancel_ticket_form(request,ticket_id):
     request.session['ticket_id']=ticket_id
@@ -113,7 +115,6 @@ def cancel_ticket(request):
                     if ticket.id==ticket_id:
                         ticket=ticket_details.objects.get(id=ticket_id)
                         ticket.delete()
-                        # return redirect('home')
                     else:
                         count=count+1
                 if total_tickets==count+1:
@@ -193,12 +194,12 @@ def roundtrip_make_payment(request):
         p=paymentHistory(username=current_user,first_name=first_name,last_name=last_name,mobile_no=mobile_no,payment_method=payment_method)
         p.save()
         going_ticket=ticket_details(username=current_user,flight_id=flight_id1,first_name=first_name,last_name=last_name,price=price1,company=flight1.company,flight_no=flight1.flight_no,
-        departure_time=flight1.departure_time,arrival_time=flight1.arrival_time,source=flight1.source,destination=flight1.destination,departure_date=flight1.date,
-        travellers=travellers)
+        departure_time=flight1.departure_time,arrival_time=flight1.arrival_time,source=flight1.source,destination=flight1.destination,departure_date=flight1.date,arrival_date=flight1.arrival_date,
+        cls=cls,travellers=travellers)
         going_ticket.save()
         return_ticket=ticket_details(username=current_user,flight_id=flight_id2,first_name=first_name,last_name=last_name,price=price2,company=flight2.company,flight_no=flight2.flight_no,
-        departure_time=flight2.departure_time,arrival_time=flight2.arrival_time,source=flight2.source,destination=flight2.destination,departure_date=flight2.date,
-        travellers=travellers)
+        departure_time=flight2.departure_time,arrival_time=flight2.arrival_time,source=flight2.source,destination=flight2.destination,departure_date=flight2.date,arrival_date=flight2.arrival_date,
+        cls=cls,travellers=travellers)
         return_ticket.save()
         going_ticket_id=going_ticket.id
         return_ticket_id=return_ticket.id

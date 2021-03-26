@@ -1,5 +1,16 @@
 <html>
-
+<head>
+	<style>
+		/* table{
+		border: 1px solid black;
+		border-collapse: collapse;
+	} */
+		table td {
+			column-width: 195px;
+			text-align: center;
+		}
+	</style>
+</head>
 <body>
 	{% load static %}
 	{% for message in messages %}
@@ -12,20 +23,20 @@
 			<table width="100%">
 				<tr>
 					<td> {{ flight.company }} </td>
-					<td rowspan="2"> {{ flight.source }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span>
-						&nbsp;&nbsp; {{ flight.destination }}</td>
-					<td> {{ flight.departure_date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span>
-						&nbsp;&nbsp; {{flight.arrival_date }} </td>
+					<td rowspan="2"> {{ flight.source }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{ flight.destination }}</td>
+					<td> {{ flight.departure_date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
 					<td> {{ flight.travellers }} Travellers </td>
 					<td> {{ flight.price }} &#8377;</td>
 				</tr>
 				<tr>
 					<td> {{ flight.flight_no }} </td>
-					<td> {{ flight.departure_time }}
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }}
+					<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
+					<td> {{ flight.cls }} Class </td>
+					<td>
+						{% if flight.departure_date > current_date %}
+							<a href="/cancel_ticket_form{{ flight.id }}">Cancel Ticket</a>
+						{% endif %}
 					</td>
-					<td> {{cls}} Class </td>
-					<td> <a href="/cancel_ticket_form{{ flight.id }}">Cancel Ticket</a></td>
 				</tr>
 			</table>
 		</div>

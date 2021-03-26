@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'FlightBookingSystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'flight_booking_system_db',
+        'NAME': 'flight_booking_system',
 	    'USER':'root',
 	    'PASSWORD':'',
 	    'HOST':'127.0.0.1',

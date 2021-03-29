@@ -1,15 +1,32 @@
 <html>
+<head>
+	<style>
+		table td {
+			column-width: 195px;
+			text-align: center;
+		}
+	</style>
+</head>
 <body>
-	{% for i in data %}
-	<table>
-		<tr>
-			<td> {{ i.first_name }} </td>
-			<td> {{ i.last_name }} </td>
-			<td> {{ i.mobile_no }} </td>
-			<td> {{ i.payment_method }} </td>
-			<td> {{ i.payment_date }} </td>
-		</tr>
-	</table>
-	{% endfor %}
+	{% load static %}
+	{% for message in messages %}
+        <h3 align="center"> {{message}} </h3>
+    {% endfor %}
+	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/payment_history.css' %}" />
+	<div class="hero">
+		{% for i in data %}
+		<div class="form-box">
+			<table width="100%">
+				<tr>
+					<td> {{ i.first_name }} </td>
+					<td> {{ i.last_name }} </td>
+					<td> {{ i.mobile_no }} </td>
+					<td> {{ i.payment_method }} </td>
+					<td> {{ i.payment_date }} </td>
+				</tr>
+			</table>
+		</div>
+		{% endfor %}
+	</div>
 </body>
 </html>

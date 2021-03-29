@@ -85,6 +85,9 @@ def make_payment(request):
 def view_payment_history(request):
     current_user=request.user
     data=paymentHistory.objects.all().filter(username=current_user)
+    count=paymentHistory.objects.all().filter(username=current_user).count()
+    if count == 0:
+        messages.info(request,"No Payment History Found.")
     return render(request,"view_payment_history.html",{'data':data})
     
 def view_ticket(request):

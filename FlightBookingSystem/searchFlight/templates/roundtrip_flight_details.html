@@ -1,117 +1,120 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title> Flight Details </title>
 	<style>
-	table{
+		/* table{
 		border: 1px solid black;
 		border-collapse: collapse;
-	}
-	table td{
-		column-width: 150px;
-		text-align: center;
-	}
+	} */
+		table td {
+			column-width: 250px;
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
-		<h3> {{ source }} -> {{ destination }} </h3>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'searchFlight/flight_details.css' %}" />
+	<div class="hero">
+		<h2> {{ source }} <span style='font-size:30px'>&#8594;</span> {{ destination }} </h2>
 		{% for flight in data1 %}
+		<div class="form-box">
 			<table width="100%">
 				{% if flight.date > current_date %}
 					<tr>
 						<td> {{ flight.company }} </td>
-						<td> {{ flight.date }} </td>
-						<td> {{ flight.arrival_date }} </td>
-						<td> {{ travellers }} </td>
-						<td> </td>
+						<td> {{ flight.date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
+						<td> {{ travellers }} Travellers </td>
+						<td> {% if cls == "Economy" %}
+							{% widthratio flight.economy_price 1 travellers %} &#8377;
+							{% elif cls == "Business" %}
+							{% widthratio flight.business_price 1 travellers %} &#8377;
+							{% else %}
+							{% widthratio flight.first_class_price 1 travellers %} &#8377;
+							{% endif %} </td>
 					</tr>
 					<tr>
 						<td> {{ flight.flight_no }} </td>
-						<td> {{ flight.departure_time }} </td>
-						<td> {{ flight.arrival_time }} </td>
-						<td> {% if cls == "Economy" %}
-								{% widthratio flight.economy_price 1 travellers %}
-							{% elif cls == "Business" %}
-								{% widthratio flight.business_price 1 travellers %}
-							{% else %}
-								{% widthratio flight.first_class_price 1 travellers %}
-							{% endif %} </td>
+						<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
+						<td> {{cls}} Class </td>
 						<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select1"> </td>
 					</tr>
-				{% elif flight.date == current_date and flight.departure_time > current_time %}
+					{% elif flight.date == current_date and flight.departure_time > current_time %}
 					<tr>
 						<td> {{ flight.company }} </td>
-						<td> {{ flight.date }} </td>
-						<td> {{ flight.arrival_date }} </td>
-						<td> {{ travellers }} </td>
-						<td> </td>
+						<td> {{ flight.date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
+						<td> {{ travellers }} Travellers </td>
+						<td> {% if cls == "Economy" %}
+							{% widthratio flight.economy_price 1 travellers %} &#8377;
+							{% elif cls == "Business" %}
+							{% widthratio flight.business_price 1 travellers %} &#8377;
+							{% else %}
+							{% widthratio flight.first_class_price 1 travellers %} &#8377;
+							{% endif %} </td>
 					</tr>
 					<tr>
 						<td> {{ flight.flight_no }} </td>
-						<td> {{ flight.departure_time }} </td>
-						<td> {{ flight.arrival_time }} </td>
-						<td> {% if cls == "Economy" %}
-								{% widthratio flight.economy_price 1 travellers %}
-							{% elif cls == "Business" %}
-								{% widthratio flight.business_price 1 travellers %}
-							{% else %}
-								{% widthratio flight.first_class_price 1 travellers %}
-							{% endif %} </td>
+						<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
+						<td> {{cls}} Class </td>
 						<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select1"> </td>
 					</tr>
 				{% endif %}
 			</table>
-			<br>
+		</div>
 		{% endfor %}
 		
-		<h3> {{ destination }} -> {{ source }} </h3>
+		<h2> {{ destination }} <span style='font-size:30px'>&#8594;</span> {{ source }} </h2>
 		{% for flight in data2 %}
+		<div class="form-box">
 			<table width="100%">
 				{% if flight.date > current_date %}
 					<tr>
 						<td> {{ flight.company }} </td>
-						<td> {{ flight.date }} </td>
-						<td> {{ flight.arrival_date }} </td>
-						<td> {{ travellers }} </td>
-						<td> </td>
+						<td> {{ flight.date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
+						<td> {{ travellers }} Travellers </td>
+						<td> {% if cls == "Economy" %}
+							{% widthratio flight.economy_price 1 travellers %} &#8377;
+							{% elif cls == "Business" %}
+							{% widthratio flight.business_price 1 travellers %} &#8377;
+							{% else %}
+							{% widthratio flight.first_class_price 1 travellers %} &#8377;
+							{% endif %} </td>
 					</tr>
 					<tr>
 						<td> {{ flight.flight_no }} </td>
-						<td> {{ flight.departure_time }} </td>
-						<td> {{ flight.arrival_time }} </td>
-						<td> {% if cls == "Economy" %}
-								{% widthratio flight.economy_price 1 travellers %}
-							{% elif cls == "Business" %}
-								{% widthratio flight.business_price 1 travellers %}
-							{% else %}
-								{% widthratio flight.first_class_price 1 travellers %}
-							{% endif %} </td>
+						<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
+						<td> {{cls}} Class </td>
 						<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select2"> </td>
 					</tr>
-				{% elif flight.date == current_date and flight.departure_time > current_time %}
+					{% elif flight.date == current_date and flight.departure_time > current_time %}
 					<tr>
 						<td> {{ flight.company }} </td>
-						<td> {{ flight.date }} </td>
-						<td> {{ flight.arrival_date }} </td>
-						<td> {{ travellers }} </td>
-						<td> </td>
+						<td> {{ flight.date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
+						<td> {{ travellers }} Travellers </td>
+						<td> {% if cls == "Economy" %}
+							{% widthratio flight.economy_price 1 travellers %} &#8377;
+							{% elif cls == "Business" %}
+							{% widthratio flight.business_price 1 travellers %} &#8377;
+							{% else %}
+							{% widthratio flight.first_class_price 1 travellers %} &#8377;
+							{% endif %} </td>
 					</tr>
 					<tr>
 						<td> {{ flight.flight_no }} </td>
-						<td> {{ flight.departure_time }} </td>
-						<td> {{ flight.arrival_time }} </td>
-						<td> {% if cls == "Economy" %}
-								{% widthratio flight.economy_price 1 travellers %}
-							{% elif cls == "Business" %}
-								{% widthratio flight.business_price 1 travellers %}
-							{% else %}
-								{% widthratio flight.first_class_price 1 travellers %}
-							{% endif %} </td>
+						<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
+						<td> {{cls}} Class </td>
 						<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select2"> </td>
 					</tr>
 				{% endif %}
 			</table>
-			<br>
-		{% endfor %}	
+		</div>	
+		{% endfor %}
+	
 		<button type="button" onclick="displayFlight()"> Select </button>
 		<div id="price"></div>
 		<div id="error"></div>
@@ -164,5 +167,6 @@
 				}
 			}
 		</script>
+		</div>
 </body>
 </html>

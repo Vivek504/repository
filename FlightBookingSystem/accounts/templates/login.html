@@ -9,7 +9,13 @@
 		<div class="title">
 			Login Form
 		</div>
-		<form action="login" method="POST">
+		<div>
+			{% for message in messages %}
+				<br>
+				<h2 align="center" style="color:red;"> {{message}} </h2>
+			{% endfor %}
+		</div>
+		<form action="" method="POST">
 			{% csrf_token %}
 			<div class="field">
 				<input type="text" required name="username">
@@ -31,11 +37,6 @@
 				Don't have an account? <a href="register"> Register </a>
 			</div>
 		</form>
-		<div>
-			{% for message in messages %}
-			<h3 align="center"> {{message}} </h3>
-			{% endfor %}
-		</div>
 	</div>
 </body>
 </html>

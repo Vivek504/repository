@@ -6,12 +6,15 @@
 	{% load static %}
 	<link rel="stylesheet" type="text/css" href="{% static 'searchFlight/home_style.css' %}"/>
 	<div class="hero">
-		<div id="main">			
+		<div id="main">	
 			<nav>
+				<!-- {% if user.is_authenticated %}
+					Hello {{ user.get_username }}
+				{% endif %} -->
 				<ul>
 					<li><a href="view_payment_history">Payment details</a></li>
 					<li><a href="view_ticket">View ticket</a></li>
-					<li><a href="login">Logout</a></li>
+					<li><a href="http://127.0.0.1:8000/">Logout</a></li>
 				</ul>
 			</nav>
 		</div>

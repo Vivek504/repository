@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'searchFlight/flight_details.css' %}" />
+    <div class="hero">
+        {% for message in messages %}
+            <br><br><br>
+            <h2 align="center" style="color:red;"> {{message}} </h2>
+            <br>
+            <p align="center" style="color:blue;">Please Click <a href="home">here</a> to Search the Flights again.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

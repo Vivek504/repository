@@ -1,32 +1,47 @@
 <html>
 <head>
 	<style>
-		table td {
-			column-width: 195px;
-			text-align: center;
-		}
-	</style>
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        th, td {
+        text-align: center;
+        padding: 8px;
+        }
+
+        tr:nth-child(even){background-color: #f2f2f2}
+
+        th {
+        background-color: #3871db;
+        color: white;
+        }
+    </style>
 </head>
 <body>
-	{% load static %}
 	{% for message in messages %}
         <h3 align="center"> {{message}} </h3>
     {% endfor %}
-	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/payment_history.css' %}" />
-	<div class="hero">
+	<table width="100%">
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Mobile No</th>
+			<th>E-mail</th>
+			<th>Payment Method</th>
+			<th>Payment date</th>
+		</tr>
 		{% for i in data %}
-		<div class="form-box">
-			<table width="100%">
-				<tr>
-					<td> {{ i.first_name }} </td>
-					<td> {{ i.last_name }} </td>
-					<td> {{ i.mobile_no }} </td>
-					<td> {{ i.payment_method }} </td>
-					<td> {{ i.payment_date }} </td>
-				</tr>
-			</table>
-		</div>
+			<tr>
+				<td> {{ i.first_name }} </td>
+				<td> {{ i.last_name }} </td>
+				<td> {{ i.mobile_no }} </td>
+				<td> {{ i.email }} </td>
+				<td> {{ i.payment_method }} </td>
+				<td> {{ i.payment_date }} </td>
+			</tr>
 		{% endfor %}
-	</div>
+	</table>
 </body>
 </html>

@@ -60,7 +60,7 @@ def make_payment(request):
             price=flight.business_price*travellers
         else:
             price=flight.first_class_price*travellers
-        p=paymentHistory(username=current_user,first_name=first_name,last_name=last_name,mobile_no=mobile_no,payment_method=payment_method)
+        p=paymentHistory(username=current_user,first_name=first_name,last_name=last_name,mobile_no=mobile_no,email=email,payment_method=payment_method)
         p.save()
         ticket=ticket_details(username=current_user,flight_id=flight_id,first_name=first_name,last_name=last_name,price=price,company=flight.company,flight_no=flight.flight_no,
         departure_time=flight.departure_time,arrival_time=flight.arrival_time,source=flight.source,destination=flight.destination,departure_date=flight.date,
@@ -194,7 +194,7 @@ def roundtrip_make_payment(request):
             price1=flight1.first_class_price*travellers
             price2=flight2.first_class_price*travellers
         price=price1+price2    
-        p=paymentHistory(username=current_user,first_name=first_name,last_name=last_name,mobile_no=mobile_no,payment_method=payment_method)
+        p=paymentHistory(username=current_user,first_name=first_name,last_name=last_name,mobile_no=mobile_no,email=email,payment_method=payment_method)
         p.save()
         going_ticket=ticket_details(username=current_user,flight_id=flight_id1,first_name=first_name,last_name=last_name,price=price1,company=flight1.company,flight_no=flight1.flight_no,
         departure_time=flight1.departure_time,arrival_time=flight1.arrival_time,source=flight1.source,destination=flight1.destination,departure_date=flight1.date,arrival_date=flight1.arrival_date,

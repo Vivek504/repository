@@ -2,10 +2,6 @@
 <head>
 	<title>Select Payment Method</title>
 	<style>
-		/* table{
-		border: 1px solid black;
-		border-collapse: collapse;
-	} */
 		table td {
 			column-width: 250px;
 			text-align: center;
@@ -40,7 +36,7 @@
 			<br>
 			<div class="select">
 				<select name="paymethod" required>
-					<option value="">Select Paymnet Method</option>
+					<option value="">Select Payment Method</option>
 					<option value="credit" > Credit card </option>
 					<option value="debit"> Debit card </option>
 				</select>
@@ -51,20 +47,21 @@
 		</form>
 	</div>
 	<div class="form-box">
-	<table width="100%">
-		<tr>
-			<td> {{ flight.company }} </td>
-			<td rowspan="2"> {{ flight.source }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{ flight.destination }}</td>
-			<td> {{ flight.date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
-			<td> {{ travellers }} Travellers </td>
-			<td rowspan="2"> {{ price }} &#8377;</td>
-		</tr>
-		<tr>
-			<td> {{ flight.flight_no }} </td>
-			<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
-			<td> {{cls}} Class </td>
-		</tr>
-	</table>
-</div>
+		<table width="100%">
+			<tr>
+				<td> {{ flight.company }} </td>
+				<td rowspan="2"> {{ flight.source }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{ flight.destination }}</td>
+				<td> {{ flight.date }} &nbsp;&nbsp; <span style='font-size:25px'>&#8594;</span> &nbsp;&nbsp; {{flight.arrival_date }} </td>
+				<td> {{ travellers }} Travellers </td>
+				<td rowspan="2"> {{ price }} &#8377;</td>
+			</tr>
+			<tr>
+				<td> {{ flight.flight_no }} </td>
+				<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
+				<td> {{cls}} Class </td>
+			</tr>
+		</table>
+	</div>
+	<p style="color:blue;">Please Click <a href="home">here</a> to go to Home page.</p>
 </body>
 </html>

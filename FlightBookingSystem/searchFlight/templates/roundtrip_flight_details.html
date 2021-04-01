@@ -79,7 +79,7 @@
 		
 		{% for flight in data2 %}
 			{% if forloop.first %}
-				<h2> {{ source }} <span style='font-size:30px'>&#8594;</span> {{ destination }} </h2>
+				<h2> {{ destination }} <span style='font-size:30px'>&#8594;</span> {{ source }} </h2>
 			{% endif %}
 			{% if flight.date > current_date %}
 				<div class="form-box">
@@ -100,7 +100,7 @@
 							<td> {{ flight.flight_no }} </td>
 							<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
 							<td> {{cls}} Class </td>
-							<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select1"> </td>
+							<td> <input type="radio" value="{{ flight.id }} {{ travellers }} {{ cls }} {{ flight.economy_price }} {{flight.business_price}} {{ flight.first_class_price }}" name="select2"> </td>
 						</tr>
 					</table>
 				</div>
@@ -182,6 +182,8 @@
 				}
 			}
 		</script>
+		<br>
+		<p style="color:blue;">Please Click <a href="home">here</a> to go to Home page.</p>
 		</div>
 </body>
 </html>

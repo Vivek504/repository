@@ -1,25 +1,10 @@
 <html>
 <head>
-	<style>
-        table {
-        border-collapse: collapse;
-        width: 100%;
-        }
-
-        th, td {
-        text-align: center;
-        padding: 8px;
-        }
-
-        tr:nth-child(even){background-color: #f2f2f2}
-
-        th {
-        background-color: #3871db;
-        color: white;
-        }
-    </style>
+	<title>Payment History</title>
 </head>
 <body>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/payment_history_style.css' %}"/>
 	{% for message in messages %}
         <h3 align="center"> {{message}} </h3>
     {% endfor %}
@@ -43,5 +28,6 @@
 			</tr>
 		{% endfor %}
 	</table>
+	<p style="color:blue;">Please Click <a href="home">here</a> to go to Home page.</p>
 </body>
 </html>

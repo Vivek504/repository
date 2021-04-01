@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import paymentHistory
-from .models import ticket_details
+from manageTicket.models import ticket_details
 from searchFlight.models import flight_details
 from django.conf import settings 
 from django.core.mail import send_mail
@@ -73,8 +73,7 @@ def make_payment(request):
         seat.save()
         
         subject = 'Thank you'
-        # message = f'Ticket reservation is done successfully.Flight details are as follows:Flight Number:{{flight.flight_no}}'
-        message = render_to_string('mail_file.html',{'flight':flight,'cls':cls,'travellers':travellers})
+        message = render_to_string('oneway_mail.html',{'flight':flight,'cls':cls,'travellers':travellers})
         email_from = settings.EMAIL_HOST_USER 
         recipient_list = [email, ] 
         send_mail( subject, message, email_from, recipient_list ) 
@@ -89,53 +88,6 @@ def view_payment_history(request):
     if count == 0:
         messages.info(request,"No Payment History Found.")
     return render(request,"view_payment_history.html",{'data':data})
-    
-def view_ticket(request):
-    current_user=request.user
-    data=ticket_details.objects.all().filter(username=current_user).order_by('departure_date').reverse()
-    count=ticket_details.objects.all().filter(username=current_user).count()
-    if count == 0:
-        messages.info(request,"No Tickets Found.")
-    current_date=date.today()
-    return render(request,"view_ticket.html",{'data':data,'current_date':current_date})
-
-def cancel_ticket_form(request,ticket_id):
-    request.session['ticket_id']=ticket_id
-    return render(request,"cancel_ticket.html")
-
-def cancel_ticket(request):
-    if request.method == 'POST':
-        username=request.POST.get('username','')
-        password=request.POST.get('password','')
-        ticket_id=request.session['ticket_id']
-        if username==request.user.username:    
-            user=auth.authenticate(username=username,password=password)
-            if user is not None:
-                ticket_ids=ticket_details.objects.all().filter(username=request.user.username)
-                total_tickets=ticket_details.objects.all().filter(username=request.user.username).count()
-                count=0
-                for ticket in ticket_ids:
-                    if ticket.id==ticket_id:
-                        ticket=ticket_details.objects.get(id=ticket_id)
-                        ticket.delete()
-                    else:
-                        count=count+1
-                if total_tickets==count+1:
-                    return redirect('home')
-                else:
-                    messages.info(request,'Somethong went wrong!!')
-                    return render(request,"cancel_ticket_error.html",{'ticket_id':ticket_id})
-            else:
-                messages.info(request,'Invalid username or password')
-                return render(request,"cancel_ticket_error2.html",{'ticket_id':ticket_id})    
-        else:
-            messages.info(request,'Invalid username or password')
-            return render(request,"cancel_ticket_error2.html",{'ticket_id':ticket_id})
-    else:
-        return redirect("login")
-
-def cancel_ticket_error(request):
-    return render(request,"cancel_ticket_error.html")
 
 def roundtrip_payment(request,flight_id1,flight_id2,travellers,cls):
     going_flight=flight_details.objects.get(id=flight_id1)
@@ -215,7 +167,7 @@ def roundtrip_make_payment(request):
         seat2.capacity=confirm_seat2
         seat2.save()
         subject = 'Thank you'
-        message = f'Ticket reservation is done successfully.{going_ticket_id} and {return_ticket_id} '
+        message = render_to_string('roundtrip_mail.html',{'flight1':flight1,'flight2':flight2,'cls':cls,'travellers':travellers})
         email_from = settings.EMAIL_HOST_USER 
         recipient_list = [email, ] 
         send_mail( subject, message, email_from, recipient_list ) 

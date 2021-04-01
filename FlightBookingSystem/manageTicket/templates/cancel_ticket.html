@@ -4,11 +4,15 @@
 </head>
 <body>
     {% load static %}
-	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/cancel_ticket_style.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'manageTicket/cancel_ticket_style.css' %}"/>
         <div class="wrapper">
             <div class="title">
                 Confirmation
             </div>
+            {% for message in messages %}
+                <br>
+                <h3 align="center" style="color:red;"> {{message}} </h3>
+            {% endfor %}
             <form action="cancel_ticket" method="POST">
                 {% csrf_token %}
                 <div class="field">
@@ -24,15 +28,6 @@
                 </div>
             </form>
         </div>
-        <!-- <div>
-            {% for message in messages %}
-            <h3 align="center"> {{message}} </h3>
-            {% endfor %}
-        </div>
-        {% if some_flag %}
-            <script>
-              alert("I am an alert box!");
-            </script>
-        {% endif %} -->
+    <p style="color:blue;">Please Click <a href="home">here</a> to go to Home page.</p>
 </body>
 </html>

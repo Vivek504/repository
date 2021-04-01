@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'searchFlight',
     'paymentModule',
+    'manageTicket',
 ]
 
 MIDDLEWARE = [

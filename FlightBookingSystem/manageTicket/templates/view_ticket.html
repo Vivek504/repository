@@ -1,5 +1,6 @@
 <html>
 <head>
+	<title>View Ticket</title>
 	<style>
 		table td {
 			column-width: 195px;
@@ -9,11 +10,11 @@
 </head>
 <body>
 	{% load static %}
-	{% for message in messages %}
-        <h3 align="center"> {{message}} </h3>
-    {% endfor %}
-	<link rel="stylesheet" type="text/css" href="{% static 'paymentModule/view_ticket.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'manageTicket/view_ticket.css' %}" />
 	<div class="hero">
+		{% for message in messages %}
+        	<h3 align="center"> {{message}} </h3>
+    	{% endfor %}
 		{% for flight in data %}
 		<div class="form-box">
 			<table width="100%">
@@ -29,14 +30,22 @@
 					<td> {{ flight.departure_time }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{flight.arrival_time }} </td>
 					<td> {{ flight.cls }} Class </td>
 					<td>
-						{% if flight.departure_date > current_date %}
-							<a href="/cancel_ticket_form{{ flight.id }}">Cancel Ticket</a>
-						{% endif %}
+						<form action="cancel_ticket_form" method="POST">
+							{% if flight.departure_date > current_date %}
+								{% csrf_token %}
+								<input type="number" name="flight_id" hidden value={{ flight.flight_id }}>
+								<input type="number" name="travellers" hidden value={{ flight.travellers }}>
+								<input type="number" name="ticket_id" hidden value={{ flight.id }}>
+								<input type="text" name="cls" hidden value={{ flight.cls }}>
+								<button type="submit"> Cancel Ticket </button>
+							{% endif %}
+						</form>
 					</td>
 				</tr>
 			</table>
 		</div>
 		{% endfor %}
+		<p>Please Click <a href="home">here</a> to go to Home page.</p>
 	</div>
 </body>
 </html>

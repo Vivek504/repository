@@ -97,12 +97,15 @@ def roundtrip_payment(request,flight_id1,flight_id2,travellers,cls):
     request.session['cls']=cls
     request.session['travellers']=travellers
     if cls=="Economy":
-        price=(going_flight.economy_price*travellers)+(return_flight.economy_price*travellers)
+        price1=going_flight.economy_price*travellers
+        price2=return_flight.economy_price*travellers
     elif cls=="Business":
-        price=(going_flight.business_price*travellers)+(return_flight.business_price*travellers)
+        price1=going_flight.business_price*travellers
+        price2=return_flight.business_price*travellers
     else:
-        price=(going_flight.first_class_price*travellers)+(return_flight.first_class_price*travellers)
-    return render(request,"roundtrip_payment.html",{'flight1':going_flight,'flight2':return_flight,'price':price,'travellers':travellers})
+        price1=going_flight.first_class_price*travellers
+        price2=return_flight.first_class_price*travellers
+    return render(request,"roundtrip_payment.html",{'flight1':going_flight,'flight2':return_flight,'price1':price1,'price2':price2,'travellers':travellers})
 
 def roundtrip_payment_method(request):
     if request.method == 'POST':

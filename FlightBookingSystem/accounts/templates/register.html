@@ -9,6 +9,12 @@
 		<div class="title">
 			Registration
 		</div>
+		<div>
+			{% for message in messages %}
+				<br>
+				<h2 align="center" style="color:red;"> {{message}} </h2>
+			{% endfor %}
+		</div>
 		<form action="register" method="POST">
 			{% csrf_token %}
 			<div class="field">
@@ -28,7 +34,7 @@
 				<label>E-mail</label>
 			</div>
 			<div class="field">
-				<input type="submit" value="Register">
+				<input type="submit" value="Register" name="submit">
 			</div>
 		</form>
 	</div>

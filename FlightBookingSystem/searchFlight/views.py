@@ -32,7 +32,7 @@ def roundTrip(request):
         dep_date=request.POST['depdate']
         ret_date=request.POST['retdate']
         travellers=request.POST['travellers']
-        cls=request.POST['class']
+        cls=request.POST['class2']
         current_date=date.today()
         current_time=datetime.now().time()
         data1=flight_details.objects.all().filter(source=source, destination=destination, date=dep_date, capacity__gte=travellers, capacity__gt=0)

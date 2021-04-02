@@ -4,11 +4,15 @@ import time
 
 class TestSearchFlight(LiveServerTestCase):
     def setUp(self):
-        self.driver = Chrome("C:\\Users\\LENOVO\\chromedriver.exe")
+        self.driver = Chrome("C:\\Users\\vivek\\chromedriver.exe")
 
     def test_onewayTrip(self):
         driver = self.driver
-        driver.get('http://127.0.0.1:8000/home')
+        driver.get('http://127.0.0.1:8000/')
+
+        driver.find_element_by_name('username').send_keys('vivek')
+        driver.find_element_by_name('password').send_keys('sonani')
+        driver.find_element_by_name('submit').click()
 
         driver.find_element_by_name('oneway').click()
 
@@ -30,7 +34,11 @@ class TestSearchFlight(LiveServerTestCase):
 
     def test_roundTrip(self):
         driver = self.driver
-        driver.get('http://127.0.0.1:8000/home')
+        driver.get('http://127.0.0.1:8000/')
+
+        driver.find_element_by_name('username').send_keys('vivek')
+        driver.find_element_by_name('password').send_keys('sonani')
+        driver.find_element_by_name('submit').click()
 
         driver.find_element_by_name('round').click()
         time.sleep(3)

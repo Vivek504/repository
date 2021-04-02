@@ -11,12 +11,12 @@ class TestAccount(LiveServerTestCase):
         driver.get('http://127.0.0.1:8000/')
         
         #Testcase 1
-        driver.find_element_by_name('username').send_keys('vivek')
-        driver.find_element_by_name('password').send_keys('sonani')
+        driver.find_element_by_name('username').send_keys('aum')
+        driver.find_element_by_name('password').send_keys('123')
 
         #Testcase 2
-        # driver.find_element_by_name('username').send_keys('vivek')
-        # driver.find_element_by_name('password').send_keys('123')
+        # driver.find_element_by_name('username').send_keys('aum')
+        # driver.find_element_by_name('password').send_keys('12345')
 
         driver.find_element_by_name('submit').click()
 
@@ -29,16 +29,16 @@ class TestAccount(LiveServerTestCase):
         time.sleep(3)
         
         #Testcase 1
-        driver.find_element_by_name('username').send_keys('vivek1')
-        driver.find_element_by_name('password1').send_keys('1234')
-        driver.find_element_by_name('password2').send_keys('1234')
-        driver.find_element_by_name('email').send_keys('viveksonani302@gmail.com')
+        driver.find_element_by_name('username').send_keys('aum')
+        driver.find_element_by_name('password1').send_keys('123')
+        driver.find_element_by_name('password2').send_keys('123')
+        driver.find_element_by_name('email').send_keys('aumthacker55@gmail.com')
 
-        #Testcase 2
-        # driver.find_element_by_name('username').send_keys('vivek')
-        # driver.find_element_by_name('password1').send_keys('1234')
-        # driver.find_element_by_name('password2').send_keys('1234')
-        # driver.find_element_by_name('email').send_keys('viveksonani302@gmail.com')
+        #Testcase 2 for username already exist
+        # driver.find_element_by_name('username').send_keys('aum')
+        # driver.find_element_by_name('password1').send_keys('123')
+        # driver.find_element_by_name('password2').send_keys('123')
+        # driver.find_element_by_name('email').send_keys('aumthacker55@gmail.com')
 
         driver.find_element_by_name('submit').click()
 

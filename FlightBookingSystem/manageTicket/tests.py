@@ -11,9 +11,8 @@ class TestTicket(LiveServerTestCase):
         driver = self.driver
         driver.get('http://127.0.0.1:8000/')
         
-        driver.find_element_by_name('username').send_keys('aumth')
+        driver.find_element_by_name('username').send_keys('aum')
         driver.find_element_by_name('password').send_keys('123')
-        
         driver.find_element_by_name('submit').click()
         
         driver.find_element_by_name('view_ticket').click()
@@ -22,16 +21,18 @@ class TestTicket(LiveServerTestCase):
         driver = self.driver
         driver.get('http://127.0.0.1:8000/')
         
-        driver.find_element_by_name('username').send_keys('aumth')
+        driver.find_element_by_name('username').send_keys('aum')
         driver.find_element_by_name('password').send_keys('123')
-        
         driver.find_element_by_name('submit').click()
         
         driver.find_element_by_name('view_ticket').click()
 
-        driver.find_element_by_name('ticket_id').send_keys('1')
-        driver.find_element_by_name('submit').click()
+        time.sleep(2)
+        driver.find_element_by_xpath('/html/body/div/div[2]/table/tbody/tr[2]/td[4]/form/button').click()
 
-        driver.find_element_by_name('username').send_keys('aumth')
+        time.sleep(2)
+        driver.find_element_by_name('username').send_keys('aum')
         driver.find_element_by_name('password').send_keys('123')
+        # driver.find_element_by_name('username').send_keys('aum')
+        # driver.find_element_by_name('password').send_keys('thacker')
         driver.find_element_by_name('submit').click()

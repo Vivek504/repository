@@ -4,7 +4,7 @@ import time
 
 class TestSearchFlight(LiveServerTestCase):
     def setUp(self):
-        self.driver = Chrome("C:\\Users\\vivek\\chromedriver.exe")
+        self.driver = Chrome("C:\\Users\\LENOVO\\chromedriver.exe")
 
     def test_onewayTrip(self):
         driver = self.driver

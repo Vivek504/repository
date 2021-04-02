@@ -47,7 +47,8 @@ def cancel_ticket(request):
                 email_from = settings.EMAIL_HOST_USER 
                 recipient_list = [request.user.email, ] 
                 send_mail( subject, message, email_from, recipient_list )
-                return redirect('view_ticket')
+                messages.info(request,'Your Reservation is cancelled successfully.')
+                return redirect('home')
             else:
                 messages.info(request,'Invalid username or password')
                 return render(request,"cancel_ticket.html") 

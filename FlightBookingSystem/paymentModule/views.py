@@ -77,6 +77,7 @@ def make_payment(request):
         email_from = settings.EMAIL_HOST_USER 
         recipient_list = [email, ] 
         send_mail( subject, message, email_from, recipient_list ) 
+        messages.info(request,'Your Reservation is done successfully.')
         return redirect('home')
     else:
         return render(request,"home.html")

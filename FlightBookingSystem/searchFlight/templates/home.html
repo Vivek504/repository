@@ -9,11 +9,18 @@
 		<div id="main">	
 			<nav>
 				<ul>
-					<li><a href="view_payment_history">Payment details</a></li>
-					<li><a href="view_ticket">View ticket</a></li>
-					<li><a href="http://127.0.0.1:8000/">Logout</a></li>
+					<li><a href="view_payment_history" name="view_payment_history">Payment details</a></li>
+					<li><a href="view_ticket" name="view_ticket">View ticket</a></li>
+					<li><a href="http://127.0.0.1:8000/" name="logout">Logout</a></li>
 				</ul>
 			</nav>
+		</div>
+		<div class="alert">
+			<span class="closebtn">
+				{% for message in messages %}
+					<br>
+					<h2 align="center" style="color:rgb(8, 180, 8);"> {{message}} </h2>
+				{% endfor %}
 		</div>
 		<div class="form-box">
 			<div class="button-box">
